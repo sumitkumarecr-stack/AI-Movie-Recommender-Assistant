@@ -1,110 +1,57 @@
-# AI Based Movie Recommender System
+# AI Movie Recommender & Assistant
 
-A movie recommendation web app built with Python and Streamlit. It suggests similar movies based on content similarity and also includes an AI movie assistant powered by Google Gemini.
+An AI-powered movie recommendation application built with Python and Streamlit. The app recommends movies similar to a selected title and provides an AI assistant for movie-related questions.
+
+## Live Demo
+
+[Open the live Streamlit app](https://ai-movie-recommender-assistant-fpzombf4aeo97fknc8hvqd.streamlit.app/)
 
 ## Features
 
-- Movie recommendation engine using TF-IDF + cosine similarity
-- Search and recommendation based on a selected movie
-- Movie cards with poster, overview, budget, revenue, cast, and director details
-- AI-powered chat assistant for movie-related questions
-- Responsive Streamlit interface
+- Select a movie and get five similar recommendations
+- Content-based recommendations using TF-IDF and cosine similarity
+- Movie details including rating, director, cast, overview, budget, and revenue
+- TMDB poster images with a fallback placeholder
+- Gemini-powered movie chatbot for recommendations, actors, plots, and movie questions
+- Streamlit interface with separate recommendation and chatbot sections
 
-## Project Structure
+## How It Works
 
-- [app.py](app.py): Streamlit app UI and logic
-- [model.py](model.py): preprocessing, similarity calculation, and recommendation logic
-- [tmdb_5000_movies.csv](tmdb_5000_movies.csv): movie metadata
-- [tmdb_5000_credits.csv](tmdb_5000_credits.csv): cast and crew data
+The application combines movie metadata, genres, keywords, cast, and overview text into searchable tags. TF-IDF converts these tags into numerical vectors, and cosine similarity identifies movies with the most similar content.
 
-## Local Setup
+The chatbot uses the Google Gemini API to answer movie-related questions using the conversation history.
 
-1. Clone the repository:
+## Tech Stack
 
-```bash
-git clone <your-repo-url>
-cd AI_Based_MOVIE_RS
-```
+- Python
+- Streamlit
+- Pandas and NumPy
+- Scikit-learn
+- Google Gemini API
+- TMDB API
 
-2. Create and activate a virtual environment:
+## Project Files
 
-```bash
-python -m venv .venv
-```
+- [app.py](app.py): Streamlit interface, movie details, posters, and AI chatbot
+- [model.py](model.py): Data preprocessing, TF-IDF vectorization, similarity calculation, and recommendations
+- [tmdb_5000_movies.csv](tmdb_5000_movies.csv): Movie metadata
+- [tmdb_5000_credits.csv](tmdb_5000_credits.csv): Cast and crew data
+- [requirements.txt](requirements.txt): Python dependencies
 
-On Windows:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-On macOS/Linux:
-
-```bash
-source .venv/bin/activate
-```
-
-3. Install dependencies:
+## Run Locally
 
 ```bash
 pip install -r requirements.txt
-```
-
-4. Set environment variables for the AI assistant and TMDB poster API:
-
-```powershell
-$env:GOOGLE_API_KEY="your_google_api_key"
-$env:GEMINI_API_KEY="your_google_api_key"
-$env:TMDB_API_KEY="your_tmdb_api_key"
-```
-
-Or create a `.env` file if you prefer, and use `python-dotenv` in future versions.
-
-5. Run the app:
-
-```bash
 streamlit run app.py
 ```
 
-## Deployment on Streamlit Community Cloud
+The chatbot requires a Gemini API key. TMDB poster images require a TMDB API key. Configure both keys through environment variables or Streamlit Secrets.
 
-1. Push the project to GitHub.
-2. Go to: https://streamlit.io/cloud
-3. Sign in with GitHub.
-4. Click "New app".
-5. Choose your GitHub repository.
-6. Set:
-   - Branch: `main` or `master`
-   - File path: `app.py`
-7. Add environment variables in Streamlit Cloud:
-   - `GOOGLE_API_KEY`
-   - `GEMINI_API_KEY` (optional if using the first one)
-   - `TMDB_API_KEY` (optional for poster fetching)
-8. Deploy.
-
-After deployment, Streamlit gives you a public URL like:
-
-```text
-https://<your-app-name>.streamlit.app
+```toml
+GEMINI_API_KEY = "your_gemini_api_key"
+TMDB_API_KEY = "your_tmdb_api_key"
 ```
 
-## GitHub Upload Steps
+## Data Source
 
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin <your-github-repo-url>
-git push -u origin main
-```
-
-## Notes
-
-- The AI chatbot works only when a valid Google Gemini API key is set.
-- Posters are loaded from TMDB when a `TMDB_API_KEY` is configured; otherwise a placeholder image is shown.
-- If the app is slow on first load, it is due to data preprocessing and similarity computation.
-
-## License
-
-This project is for educational/demo purposes.
+The recommendation dataset contains movie information, credits, genres, keywords, cast, crew, ratings, budget, and revenue data from the TMDB 5000 Movies dataset.
