@@ -170,7 +170,7 @@ with tab2:
                         prompt = f"You are an expert movie recommender assistant. Answer the user prompt nicely:\n\n{chat_context}"
 
                         response = client.models.generate_content(
-                            model='gemini-2.5-flash',
+                            model='gemini-3.6-flash',
                             contents=prompt,
                         )
                         reply = response.text
