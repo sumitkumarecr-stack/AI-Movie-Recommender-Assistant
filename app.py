@@ -13,7 +13,19 @@ from model import compute_similarity, load_and_preprocess, recommend
 
 st.set_page_config(page_title="AI Based Personalized Movie & Recommender System", layout="wide")
 
-API_KEY = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+
+def get_secret(name):
+    value = os.getenv(name)
+    if value:
+        return value
+
+    try:
+        return st.secrets.get(name)
+    except Exception:
+        return None
+
+
+API_KEY = get_secret("GOOGLE_API_KEY") or get_secret("GEMINI_API_KEY")
 client = genai.Client(api_key=API_KEY) if genai and API_KEY else None
 
 
@@ -61,7 +73,7 @@ def display_interactive_recommendations(recommended_movies, movie_ids):
 
 
 def fetch_poster(movie_id, size="w300"):
-    tmdb_api_key = os.getenv("TMDB_API_KEY")
+    tmdb_api_key = get_secret("TMDB_API_KEY")
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
     if tmdb_api_key:
